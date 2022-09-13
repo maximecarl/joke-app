@@ -4,26 +4,20 @@ on:
   push:
     
 jobs:
-  echo-test:
+  build-test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Echo the name
-        run: |
-          export NAME=Mathias
-          echo the $NAME
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
 
-  build-test:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 16
+      - name: Install dependencies
+        run: npm ci
 
-    - name: Install dependencies
-      run: npm ci
+      - name: Run unit tests
+        run: npm test
 
-    - name: Run unit tests
-      run: npm test
-
-    - name: Build
-      run: npm run build
+      - name: Build
+        run: npm run build
