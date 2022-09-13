@@ -12,3 +12,18 @@ jobs:
         run: |
           export NAME=Mathias
           echo the $NAME
+
+  build-test:
+    - uses: actions/checkout/@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run unit tests
+      run: npm test
+
+    - name: Build
+      run: npm build
